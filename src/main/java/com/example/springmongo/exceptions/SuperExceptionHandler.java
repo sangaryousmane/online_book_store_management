@@ -34,7 +34,28 @@ public class SuperExceptionHandler {
             NoBookAvailableInStoreException ex) {
         ApiException apiEx = new ApiException(
                 ex.getMessage(),
-                HttpStatus.NOT_ACCEPTABLE);
+                HttpStatus.NOT_FOUND);
+        return ResponseEntity.ok(apiEx);
+    }
+
+    // TODO: Handles all customer not found exceptions
+    @ExceptionHandler(value = CustomerNotFoundException.class)
+    public ResponseEntity<ApiException> customerNotFoundHandler(
+            CustomerNotFoundException ex) {
+        ApiException apiEx = new ApiException(
+                ex.getMessage(),
+                HttpStatus.NOT_FOUND);
+        return ResponseEntity.ok(apiEx);
+    }
+
+
+    // TODO: Handles all customer not found exceptions
+    @ExceptionHandler(value = InvalidQuantityException.class)
+    public ResponseEntity<ApiException> invalidQuantityHandler(
+            InvalidQuantityException ex) {
+        ApiException apiEx = new ApiException(
+                ex.getMessage(),
+                HttpStatus.NOT_FOUND);
         return ResponseEntity.ok(apiEx);
     }
 }

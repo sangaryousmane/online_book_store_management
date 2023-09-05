@@ -4,6 +4,8 @@ import com.example.springmongo.model.shoppingcart.CartItem;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -15,5 +17,5 @@ public class Customer {
     private String username;
     private String password;
     private Address address;
-    private List<CartItem> shoppingCart;
+    private List<CartItem> shoppingCart = new ArrayList<>();
 }
