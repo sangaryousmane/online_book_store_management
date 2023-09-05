@@ -10,6 +10,7 @@ import com.example.springmongo.repo.books.BookRepository;
 import com.example.springmongo.repo.customers.CustomersRepository;
 import com.example.springmongo.service.books.BookServiceImpl;
 
+import java.util.List;
 import java.util.Optional;
 
 public class ShoppingCartServiceImpl implements ShoppingCartService{
@@ -32,23 +33,38 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
         }
     }
 
+    // Retrieve the customer shopping cart
+    @Override
+    public List<CartItem> getCustomerCart(Integer customerId) {
+        Customer customer=getCustomerById(customerId);
+        return customer.getShoppingCart();
+    }
+
     @Override
     public void addToCart(Integer customerId, Integer bookId, int quantity) {
         Customer customer = getCustomerById(customerId);
         Book book = bookService.getBookById(bookId);
-
-        if (book == null){
+        if (book == null) {
             throw new NoBookAvailableInStoreException("Book not found");
         }
-        if (quantity <= 0){
+        if (quantity <= 0) {
             throw new InvalidQuantityException("Invalid quantity");
         }
-
         // Add the item to the shopping cart
         CartItem cartItem = findCartItembyBookId(customer, bookId);
-        if (cartItem != null){
-            cartItem.setQuantity(cartItem.getQuantity());
+        if (cartItem != null) {
+            cartItem.setQuantity(cartItem.getQuantity() + quantity); // add the new quantity
+        } else { // Add the new book to cart
+            cartItem = new CartItem();
+            cartItem.setBook(book);
+            cartItem.setQuantity(quantity);
+            customer.getShoppingCart().add(cartItem); // Add the shopping cart to the customer document
         }
+        updateCustomer(customer); // Update the customer document with new info
+    }
+
+    private void updateCustomer(Customer customer) {
+        customerRepo.save(customer);
     }
 
     // Find the customer cart item based on the book id
@@ -60,18 +76,38 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
     }
 
     @Override
-    public void removeFromCart(Customer customer, Integer id) {
+    public void removeFromCart(Integer customerId, Integer bookId) {
+        Customer customer=getCustomerById(customerId);
+        CartItem cartItem = findCartItembyBookId(customer, bookId);
 
+        if (cartItem != null){
+            customer.getShoppingCart().remove(cartItem);
+            updateCustomer(customer);
+        }
     }
 
     @Override
-    public void updateCartItemQuantity(Customer customer, Integer bookId, int quantity) {
+    public void updateCartItemQuantity(Integer customerId, Integer bookId, int quantity) {
+        Customer customer=getCustomerById(customerId);
+        CartItem cartItem = findCartItembyBookId(customer, bookId);
 
+        if (cartItem != null){
+            cartItem.setQuantity(quantity);
+            updateCustomer(customer);
+        }
     }
 
     @Override
-    public double calculateTotalPrice(Customer customer) {
-        return 0;
+    public double calculateTotalPrice(Integer customerId) {
+        Customer customer = getCustomerById(customerId);
+        double totalPrice = 0.0;
+
+        for (CartItem cartItem: customer.getShoppingCart()){
+            Book book = cartItem.getBook();
+            int quantity = cartItem.getQuantity();
+            totalPrice += book.getPrice() * quantity;
+        }
+        return totalPrice;
     }
 
 }
