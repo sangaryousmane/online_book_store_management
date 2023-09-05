@@ -1,6 +1,6 @@
-package com.example.springmongo.service;
+package com.example.springmongo.service.books;
 
-import com.example.springmongo.model.Book;
+import com.example.springmongo.model.book.Book;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.springmongo.model;
+package com.example.springmongo.model.book;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,8 +13,10 @@ public class Book {
 
     @Id
     private Integer id;
-    private String name;
     private String title;
     private String description;
     private String authorName;
+    private double price;
+    private boolean available;
+    private String genre;
 }

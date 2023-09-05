@@ -1,10 +1,10 @@
-package com.example.springmongo.service;
+package com.example.springmongo.service.books;
 
 import com.example.springmongo.exceptions.BookIdUniqueConstrainException;
 import com.example.springmongo.exceptions.EmptyBookNameNotAllowException;
 import com.example.springmongo.exceptions.NoBookAvailableInStoreException;
-import com.example.springmongo.model.Book;
-import com.example.springmongo.repo.BookRepository;
+import com.example.springmongo.model.book.Book;
+import com.example.springmongo.repo.books.BookRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
-package com.example.springmongo.repo;
+package com.example.springmongo.repo.books;
 
-import com.example.springmongo.model.Book;
+import com.example.springmongo.model.book.Book;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

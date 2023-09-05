@@ -1,7 +1,7 @@
 package com.example.springmongo.controller;
 
-import com.example.springmongo.model.Book;
-import com.example.springmongo.service.BookServiceImpl;
+import com.example.springmongo.model.book.Book;
+import com.example.springmongo.service.books.BookServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
