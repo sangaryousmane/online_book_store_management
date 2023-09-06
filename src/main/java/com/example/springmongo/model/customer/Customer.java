@@ -1,5 +1,6 @@
 package com.example.springmongo.model.customer;
 
+import com.example.springmongo.model.order.Order;
 import com.example.springmongo.model.shoppingcart.CartItem;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -18,4 +19,5 @@ public class Customer {
     private String password;
     private Address address;
     private List<CartItem> shoppingCart = new ArrayList<>();
+    private List<Order> orderHistory;
 }
