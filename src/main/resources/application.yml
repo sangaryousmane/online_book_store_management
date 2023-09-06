@@ -4,3 +4,5 @@ spring:
       database: books
       host: ousmongotrial
       port: 27017
+stripe:
+  secretKey: sk_test_51NnN9MHGh6aJWlEaIwTr8km52wbq8iZPqrzOWtzv6cmJF5in4jvJ8hCdwmCVBBfugY1m58WOvbx1Y5EHS2pmObqe00qYsbkPpq

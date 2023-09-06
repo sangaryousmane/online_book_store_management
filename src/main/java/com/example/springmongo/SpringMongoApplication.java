@@ -10,4 +10,6 @@ public class SpringMongoApplication {
         SpringApplication.run(SpringMongoApplication.class, args);
     }
 
+
+
 }

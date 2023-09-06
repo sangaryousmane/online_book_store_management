@@ -54,8 +54,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
         CartItem cartItem = findCartItembyBookId(customer, bookId);
         if (cartItem != null) {
             cartItem.setQuantity(cartItem.getQuantity() + quantity); // add the new quantity
-        } else { // Add the new book to cart
-            cartItem = new CartItem();
+        } else {
+            cartItem = new CartItem(); // Add the new book to cart
             cartItem.setBook(book);
             cartItem.setQuantity(quantity);
             customer.getShoppingCart().add(cartItem); // Add the shopping cart to the customer document
@@ -63,6 +63,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
         updateCustomer(customer); // Update the customer document with new info
     }
 
+    // Save updated customer information to db
     private void updateCustomer(Customer customer) {
         customerRepo.save(customer);
     }
