@@ -10,4 +10,6 @@ public class ApiException {
 
     private String message;
     private HttpStatus status;
+    private Throwable throwable;
+
 }

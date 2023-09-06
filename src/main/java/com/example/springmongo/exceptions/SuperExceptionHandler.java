@@ -14,7 +14,8 @@ public class SuperExceptionHandler {
             BookIdUniqueConstrainException ex) {
         ApiException apiEx = new ApiException(
                 ex.getMessage(),
-                HttpStatus.NOT_FOUND);
+                HttpStatus.NOT_FOUND,
+                ex.getCause());
         return ResponseEntity.ok(apiEx);
     }
 
@@ -24,7 +25,8 @@ public class SuperExceptionHandler {
             EmptyBookNameNotAllowException ex) {
         ApiException apiEx = new ApiException(
                 ex.getMessage(),
-                HttpStatus.NOT_ACCEPTABLE);
+                HttpStatus.NOT_ACCEPTABLE,
+                ex.getCause());
         return ResponseEntity.ok(apiEx);
     }
 
@@ -34,7 +36,8 @@ public class SuperExceptionHandler {
             NoBookAvailableInStoreException ex) {
         ApiException apiEx = new ApiException(
                 ex.getMessage(),
-                HttpStatus.NOT_FOUND);
+                HttpStatus.NOT_FOUND,
+                ex.getCause());
         return ResponseEntity.ok(apiEx);
     }
 
@@ -44,7 +47,8 @@ public class SuperExceptionHandler {
             CustomerNotFoundException ex) {
         ApiException apiEx = new ApiException(
                 ex.getMessage(),
-                HttpStatus.NOT_FOUND);
+                HttpStatus.NOT_FOUND,
+                ex.getCause());
         return ResponseEntity.ok(apiEx);
     }
 
@@ -55,7 +59,8 @@ public class SuperExceptionHandler {
             InvalidQuantityException ex) {
         ApiException apiEx = new ApiException(
                 ex.getMessage(),
-                HttpStatus.NOT_FOUND);
+                HttpStatus.NOT_FOUND,
+                ex.getCause());
         return ResponseEntity.ok(apiEx);
     }
 }
