@@ -25,7 +25,7 @@ public class OrderService {
     }
 
     // Order creation
-    public void createOrder(Integer customerId, List<OrderItem> orderItems, double totalPrice) {
+    public void createOrder(Integer customerId, List<OrderItem> orderItems) {
         Customer customer = shoppingCartService.getCustomerById(customerId);
 
         // Create an order

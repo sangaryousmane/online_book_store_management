@@ -1,12 +1,16 @@
 package com.example.springmongo.controller;
 
+import com.example.springmongo.model.order.Order;
+import com.example.springmongo.model.order.OrderItem;
 import com.example.springmongo.model.shoppingcart.CartItem;
+import com.example.springmongo.service.orders.OrderService;
 import com.example.springmongo.service.shoppingcart.ShoppingCartService;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -19,11 +23,14 @@ import java.util.Map;
 public class ShoppingCartController {
 
     private final ShoppingCartService shoppingService;
+    private final OrderService orderService;
 
     @Value("${stripe.secretKey}")
     private String stripeSecretKey;
-    public ShoppingCartController(ShoppingCartService shoppingService) {
+    public ShoppingCartController(ShoppingCartService shoppingService,
+                                  OrderService orderService) {
         this.shoppingService = shoppingService;
+        this.orderService = orderService;
     }
 
     @PostMapping("/addToCart")
@@ -56,10 +63,12 @@ public class ShoppingCartController {
         // Retrieve customer's cart and calculate the total price
         List<CartItem> customerCart = shoppingService.getCustomerCart(customerId);
         double totalPrice = shoppingService.calculateTotalPrice(customerId);
+        customerCart.add(new CartItem((int) (totalPrice * 100))); // calculate in cent
         Stripe.apiKey = stripeSecretKey;
+
         try{
             Map<String, Object> params=new HashMap<>();
-            params.put("amount", (int) (totalPrice * 100)); // Amount in cents
+            params.put("amount", customerCart.get(2)); // Amount in cents
             params.put("currency", "USD");
             params.put("description", "Book purchased");
             PaymentIntent intent = PaymentIntent.create(params);
@@ -69,6 +78,11 @@ public class ShoppingCartController {
             ex.printStackTrace();
             return "Payment Failed";
         }
+    }
+
+    @GetMapping("/orderHistory/{customerId}")
+    public ResponseEntity<List<Order>> getCustomerOrderHistory(@PathVariable Integer customerId){
+        return ResponseEntity.ok(orderService.getCustomerOrderHistory(customerId));
     }
 
 }
