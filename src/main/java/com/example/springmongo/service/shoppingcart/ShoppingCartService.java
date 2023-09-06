@@ -13,6 +13,7 @@ public interface ShoppingCartService {
 
     void removeFromCart(Integer customer, Integer id);
 
+    public void updateCustomer(Customer customer);
     void updateCartItemQuantity(Integer customerId, Integer bookId, int quantity);
 
     double calculateTotalPrice(Integer customer);

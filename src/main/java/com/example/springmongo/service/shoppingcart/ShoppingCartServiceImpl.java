@@ -64,7 +64,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
     }
 
     // Save updated customer information to db
-    private void updateCustomer(Customer customer) {
+    public void updateCustomer(Customer customer) {
         customerRepo.save(customer);
     }
 
